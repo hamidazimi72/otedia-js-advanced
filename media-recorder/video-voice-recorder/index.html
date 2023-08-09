@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audio & Video Recorder</title>
+    <style>
+      * {
+        font-family: Calibri;
+        font-size: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="request-mic">درخواست مجوز میکروفون و دوربین</button>
+    <button id="start">شروع ضبط</button>
+    <button id="stop" disabled>پایان ضبط</button>
+
+    <div id="time-box">00:00</div>
+
+    <div id="result">
+      <video id="live"></video>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
