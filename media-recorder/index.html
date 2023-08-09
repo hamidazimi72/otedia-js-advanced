@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Audio Recorder</title>
+    <title>Audio & Video Recorder</title>
     <style>
       * {
         font-family: Calibri;
@@ -12,13 +12,16 @@
     </style>
   </head>
   <body>
+    <button id="request-screen">درخواست مجوز صفحه نمایش</button>
     <button id="request-mic">درخواست مجوز میکروفون</button>
     <button id="start">شروع ضبط</button>
     <button id="stop" disabled>پایان ضبط</button>
 
     <div id="time-box">00:00</div>
 
-    <div id="result"></div>
+    <div id="result">
+      <video id="live" width="800"></video>
+    </div>
 
     <script src="./app.js"></script>
   </body>

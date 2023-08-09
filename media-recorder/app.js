@@ -1,10 +1,14 @@
+const getScreenButton = document.getElementById("request-screen");
 const getMicButton = document.getElementById("request-mic");
 const startButton = document.getElementById("start");
 const stopButton = document.getElementById("stop");
 const timeBoxEl = document.getElementById("time-box");
 const resultEl = document.getElementById("result");
+const liveVideoEl = document.getElementById("live");
 
 let stream,
+  screenStream,
+  voiceStream,
   mediaRecorder,
   chunks = [];
 
@@ -21,18 +25,27 @@ const convertTimeHandler = (seconds = 0) => {
   }
 };
 
+getScreenButton.addEventListener("click", async () => {
+  screenStream = await navigator.mediaDevices.getDisplayMedia({
+    video: true,
+  });
+  console.log(screenStream);
+});
+
 getMicButton.addEventListener("click", async () => {
-  stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-  // console.log(stream);
+  voiceStream = await navigator.mediaDevices.getUserMedia({
+    audio: true,
+  });
+  console.log(voiceStream);
 });
 
 startButton.addEventListener("click", () => {
-  if (!stream) {
+  if (!(voiceStream && screenStream)) {
     alert("استریم موجود نیست!");
     return;
   }
 
-  if (!stream?.active) {
+  if (!(voiceStream?.active && screenStream?.active)) {
     alert("استریم فعال نیست!");
     return;
   }
@@ -40,11 +53,30 @@ startButton.addEventListener("click", () => {
   chunks = [];
 
   getMicButton.disabled = true;
+  getScreenButton.disabled = true;
   startButton.disabled = true;
   stopButton.disabled = false;
 
-  mediaRecorder = new MediaRecorder(stream, { audioBitsPerSecond: 32000 });
+  stream = new MediaStream(screenStream);
+  stream.addTrack(voiceStream.getAudioTracks()[0]);
+
+  mediaRecorder = new MediaRecorder(stream, {
+    audioBitsPerSecond: 32000,
+    // videoBitsPerSecond: 500000,
+  });
   let currentTime = Date.now();
+
+  const recordedVideo = document.getElementById("finally-video") || null;
+  const downloadLink = document.getElementById("dl-link") || null;
+
+  if (recordedVideo) recordedVideo.remove();
+  if (downloadLink) downloadLink.remove();
+
+  liveVideoEl.style.display = "block";
+
+  liveVideoEl.srcObject = stream;
+  liveVideoEl.play();
+  liveVideoEl.muted = true;
 
   mediaRecorder.addEventListener("dataavailable", (event) => {
     console.log(event?.data);
@@ -59,17 +91,20 @@ startButton.addEventListener("click", () => {
 
     const url = URL.createObjectURL(blob);
 
-    const audio = document.createElement("audio");
-    audio.controls = true;
-    audio.src = url;
+    const video = document.createElement("video");
+    video.setAttribute("id", "finally-video");
+    video.setAttribute("width", "800");
+    video.controls = true;
+    video.src = url;
 
     const link = document.createElement("a");
-    link.download = `sound.mp3`;
+    link.setAttribute("id", "dl-link");
+    link.download = `video.mp4`;
     link.href = url;
     link.innerText = "دانلود";
 
-    resultEl.innerHTML = "";
-    resultEl.appendChild(audio);
+    liveVideoEl.style.display = "none";
+    resultEl.appendChild(video);
     resultEl.appendChild(link);
 
     getMicButton.disabled = false;
