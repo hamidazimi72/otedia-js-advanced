@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Video Player</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <video
+      id="video"
+      src="https://file-examples.com/storage/fe7bb0e37864d66f29c40ee/2017/04/file_example_MP4_1280_10MG.mp4"
+      controls
+    ></video>
+
+    <div class="w-9/12 mt-4 mx-auto rounded flex flex-col gap-2 p-2 border">
+      <div class="w-full flex justify-between items-center">
+        <div class="flex items-center gap-2">
+          <div
+            id="play-pause"
+            class="flex justify-center items-center w-8 h-8 rounded-full bg-pink-100 cursor-pointer"
+          >
+            <img />
+          </div>
+          <div
+            id="stop"
+            class="flex justify-center items-center w-8 h-8 rounded-full bg-pink-100 cursor-pointer"
+          >
+            <img />
+          </div>
+        </div>
+        <div class="flex items-center gap-2">
+          <div
+            id="fullscreen"
+            class="flex justify-center items-center w-8 h-8 rounded-full bg-pink-100 cursor-pointer"
+          >
+            <img />
+          </div>
+          <div
+            id="volume"
+            class="flex justify-center items-center w-8 h-8 rounded-full bg-pink-100 cursor-pointer"
+          >
+            <img />
+          </div>
+          <input type="range" id="volume-bar" min="0" max="100" value="50" />
+        </div>
+      </div>
+      <div class="w-full flex items-center gap-4">
+        <input
+          type="range"
+          id="time-bar"
+          class="w-full"
+          min="0"
+          max="100"
+          value="0"
+        />
+        <div class="flex items-center gap-1">
+          <span id="current-time">00:00</span>
+          <span>/</span>
+          <span id="duration-time">00:00</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="./icons.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
