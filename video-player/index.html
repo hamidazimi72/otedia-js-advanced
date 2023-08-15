@@ -7,14 +7,16 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body>
-    <div class="relative max-w-[1000px] mx-auto my-2">
+    <div id="player-box" class="relative max-w-7xl mx-auto my-2 group">
       <video
         id="video"
+        class="w-full"
         src="https://file-examples.com/storage/fe7bb0e37864d66f29c40ee/2017/04/file_example_MP4_1280_10MG.mp4"
       ></video>
 
       <div
-        class="rounded flex flex-col gap-2 p-2 border absolute bottom-1 left-2 right-2 bg-white"
+        id="controls"
+        class="rounded flex flex-col gap-2 p-2 border absolute bottom-1 left-1 right-1 bg-white select-none opacity-0 pointer-events-none transition group-hover:opacity-100 group-hover:pointer-events-auto"
       >
         <div class="w-full flex justify-between items-center">
           <div class="flex items-center gap-2">
@@ -33,6 +35,12 @@
           </div>
           <div class="flex items-center gap-2">
             <div
+              id="pip"
+              class="flex justify-center items-center w-8 h-8 rounded-full bg-pink-100 cursor-pointer"
+            >
+              <img />
+            </div>
+            <div
               id="fullscreen"
               class="flex justify-center items-center w-8 h-8 rounded-full bg-pink-100 cursor-pointer"
             >
@@ -43,6 +51,24 @@
               class="flex justify-center items-center w-8 h-8 rounded-full bg-pink-100 cursor-pointer"
             >
               <img />
+            </div>
+            <div
+              id="speed-box"
+              class="relative flex justify-center items-center w-8 h-8 rounded-full bg-pink-100 cursor-pointer z-10"
+            >
+              <span id="speed-value" class="text-xs">1X</span>
+              <div
+                id="speed-list"
+                class="absolute bottom-full left-0 w-16 h-10 bg-white hidden flex-col z-20"
+              >
+                <span class="p-1 hover:bg-pink-100" data-speed="0.5">0.5X</span>
+                <span class="p-1 hover:bg-pink-100" data-speed="1">1X</span>
+                <span class="p-1 hover:bg-pink-100" data-speed="1.25"
+                  >1.25X</span
+                >
+                <span class="p-1 hover:bg-pink-100" data-speed="1.5">1.5X</span>
+                <span class="p-1 hover:bg-pink-100" data-speed="2">2X</span>
+              </div>
             </div>
             <input type="range" id="volume-bar" min="0" max="100" value="50" />
           </div>
