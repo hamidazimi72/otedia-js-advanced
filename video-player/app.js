@@ -59,11 +59,46 @@ document.addEventListener("DOMContentLoaded", () => {
   stopButton.querySelector("img").src = stopIcon;
   fullscreenButton.querySelector("img").src = fullscreenIcon;
   pipButton.querySelector("img").src = pipIcon;
-  volumeButton.querySelector("img").src = volumeIcon;
 
   if (!document.pictureInPictureEnabled) pipButton.remove();
 
-  media.volume = 0.5;
+  const config_ls = localStorage.getItem("custom-video-player")
+    ? JSON.parse(localStorage.getItem("custom-video-player"))
+    : null;
+
+  if (config_ls) {
+    media.muted = config_ls?.muted;
+    media.volume = config_ls?.volume;
+    media.playbackRate = config_ls?.playbackRate;
+  }
+
+  if (config_ls && config_ls?.muted) {
+    volumeButton.querySelector("img").src = pipIcon;
+  } else {
+    volumeButton.querySelector("img").src = volumeIcon;
+  }
+
+  if (config_ls && config_ls?.playbackRate) {
+    document.getElementById(
+      "speed-value"
+    ).innerText = `${config_ls?.playbackRate}X`;
+  } else {
+    document.getElementById("speed-value").innerText = `1X`;
+  }
+
+  if (config_ls && config_ls?.src && config_ls?.src === media?.src) {
+    media.currentTime = config_ls?.currentTime || 0;
+  }
+
+  let initConfig_ls = {
+    src: "",
+    muted: false,
+    volume: 0.5,
+    currentTime: 0,
+    playbackRate: 1,
+  };
+  if (!config_ls)
+    localStorage.setItem("custom-video-player", JSON.stringify(initConfig_ls));
 });
 
 // Element Events
@@ -181,4 +216,15 @@ document.addEventListener("visibilitychange", () => {
     media.play();
     playPauseButton.querySelector("img").src = pauseIcon;
   }
+});
+
+window.addEventListener("beforeunload", () => {
+  let config_ls = {
+    src: media.src,
+    muted: media.muted,
+    volume: media.volume,
+    currentTime: media.currentTime,
+    playbackRate: media.playbackRate,
+  };
+  localStorage.setItem("custom-video-player", JSON.stringify(config_ls));
 });
