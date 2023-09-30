@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resize Observer</title>
+    <style>
+      #container {
+        width: 500px;
+        background-color: azure;
+        padding: 20px;
+        margin: 0 auto;
+      }
+
+      #title {
+        font-size: 24px;
+      }
+
+      #para {
+        font-size: 18px;
+      }
+
+      #slider {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="observe">observe</button>
+    <button id="unobserve">unobserve</button>
+    <button id="disconnect">disconnect</button>
+    <br />
+    <br />
+    <br />
+    <div id="container">
+      <h2 id="title">This is title</h2>
+      <p id="para">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique rem,
+        voluptas soluta, quidem voluptate quae veniam voluptates fugit enim
+        ratione porro? Veritatis nobis recusandae quae at consectetur delectus,
+        voluptatem quasi.
+      </p>
+      <br />
+      <input id="slider" type="range" min="500" max="1300" value="500" />
+    </div>
+    <!-- <hr />
+    <button id="observe1">observe 1</button>
+    <button id="unobserve1">un observe 1</button>
+    <br />
+    <button id="observe2">observe 2</button>
+    <button id="unobserve2">un observe 2</button>
+    <br /> -->
+    <!-- <button id="disconnect">disconnect</button> -->
+    <!-- <br />
+    <br />
+    <br />
+
+    <textarea id="textarea1"></textarea>
+    <textarea id="textarea2"></textarea> -->
+
+    <script src="app.js"></script>
+  </body>
+</html>
